@@ -40,13 +40,7 @@ export default function SideBar() {
   return (
     <aside className={"w-80 h-full bg-custom-gray px-2 pt-2 "}>
       {NAV_LINKS.map((navLink) => (
-        <NavLinkItem
-          key={navLink.label}
-          href={navLink.href}
-          label={navLink.label}
-          icon={navLink.icon}
-          bold={navLink.bold}
-        />
+        <NavLinkItem key={navLink.label} {...navLink} />
       ))}
     </aside>
   );

@@ -6,7 +6,7 @@ export default async function AnnouncementPage({ params }: { params: Params }) {
   const { slug } = await params;
   return (
     <div>
-      <h2 className={"text-2xl font-bold"}>Edit The Announcement</h2>
+      <h2 className={"text-2xl font-bold mb-12"}>Edit The Announcement</h2>
       <p>Title: {slug}</p>
       <p>Content: //text</p>
       <p>Category: multiselect min 1 </p>
