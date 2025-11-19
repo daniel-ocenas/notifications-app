@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+:root {
+    --background: #ffffff;
+    --custom-gray: #FAFAFA;
+    --custom-yellow: #FDF7CE;
+
+}
+
+@theme inline {
+    --color-background: var(--background);
+    --color-custom-gray: var(--custom-gray);
+    --color-custom-yellow: var(--custom-yellow);
+}
+
+
+body {
+    background: var(--background);
+}
