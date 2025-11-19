@@ -9,8 +9,8 @@
   ],
   "scripts": {
     "dev:backend": "npm --workspace apps/backend run start:dev",
-    "dev:web": "npm --workspace apps/web start",
-    "dev": "npm run dev:backend & npm run dev:frontend"
+    "dev:web": "npm --workspace apps/web run dev",
+    "dev": "npm run dev:backend & npm run dev:web"
   },
   "keywords": [],
   "author": "",
