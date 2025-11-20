@@ -1,18 +1,19 @@
+import { ASSETS, ROUTES } from "@/utils/constants";
 import Image from "next/image";
 
 type NavLink = { label: string; href: string; icon: string; bold?: boolean };
 
 const NAV_LINKS: NavLink[] = [
   {
-    href: "/",
+    href: ROUTES.home,
     label: "Test city",
-    icon: "globe.svg",
+    icon: ASSETS.icons.globe,
     bold: true,
   },
   {
-    href: "/announcements",
+    href: ROUTES.announcements,
     label: "Announcements",
-    icon: "announcements.svg",
+    icon: ASSETS.icons.announcements,
   },
 ];
 
@@ -24,8 +25,8 @@ function NavLinkItem({ href, label, icon, bold }: NavLink) {
     >
       {icon && (
         <Image
-          src={`/static/icons/${icon}`}
-          alt={`nav-link-icon-${icon}`}
+          src={icon}
+          alt={`nav-link-icon`}
           width={16}
           height={16}
           className={"mr-3"}

@@ -1,4 +1,5 @@
 "use client";
+import AnnouncementsEditLinkCell from "@/components/announcements/announcements-edit-link-cell";
 import { Announcement } from "@/components/announcements/announcements.types";
 import {
   formatPublicationDate,
@@ -10,7 +11,6 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import Image from "next/image";
 
 const columns: ColumnDef<Announcement>[] = [
   { accessorKey: "title", header: "Title" },
@@ -35,18 +35,7 @@ const columns: ColumnDef<Announcement>[] = [
       return (
         <div className={"relative flex items-start text-left"}>
           {row.original.category.join(", ")}
-          <a
-            href={`/announcements/${row.original.id}`}
-            className="absolute top-0 right-0 hover:shadow-xl active:scale-90"
-          >
-            <Image
-              src="/static/icons/edit.svg"
-              alt="edit-icon"
-              width={28}
-              height={28}
-              loading="lazy"
-            />
-          </a>
+          <AnnouncementsEditLinkCell id={row.original.id} />
         </div>
       );
     },

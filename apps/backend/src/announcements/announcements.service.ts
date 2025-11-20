@@ -1,6 +1,7 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { AnnouncementsGateway } from 'src/announcements/announcements.gateway';
+import { sortByUpdatedAtDesc } from 'src/uitls/sort-utils';
 import { Announcement } from './announcement.model';
 import { CreateAnnouncementInput } from './dto/create-announcement.input';
 import { UpdateAnnouncementInput } from './dto/update-announcement.input';
@@ -30,10 +31,7 @@ export class AnnouncementsService {
 
   findAll(): Announcement[] {
     // replace with database search
-    return this.announcements.sort((a, b) => {
-      // newest first
-      return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
-    });
+    return sortByUpdatedAtDesc(this.announcements);
   }
 
   findOne(id: string): Announcement {
@@ -43,6 +41,20 @@ export class AnnouncementsService {
     }
 
     return announcement;
+  }
+
+  findByCategories(categories: string[]): Announcement[] {
+    // return all if no filter
+    if (!categories || categories.length === 0) {
+      return this.findAll();
+    }
+
+    // find all announcements that match at least one requested category
+    const filtered = this.announcements.filter((a) =>
+      a.category.some((c) => categories.includes(c)),
+    );
+
+    return sortByUpdatedAtDesc(filtered);
   }
 
   update(input: UpdateAnnouncementInput): Announcement {

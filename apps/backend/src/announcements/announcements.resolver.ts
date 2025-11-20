@@ -16,11 +16,20 @@ export class AnnouncementsResolver {
     return this.announcementsService.findAll();
   }
 
-  // GET /announcements/:id
+  // GET /announcement/:id
   @Query(() => Announcement, { name: 'announcement' })
   findOne(@Args('id', { type: () => String }) id: string) {
     Logger.log(`Going to find announcement with id: ${id} `);
     return this.announcementsService.findOne(id);
+  }
+
+  // GET /announcementsByCategories/:category
+  @Query(() => [Announcement], { name: 'announcementsByCategories' })
+  findByCategories(
+    @Args({ name: 'categories', type: () => [String], nullable: true })
+    categories?: string[],
+  ): Announcement[] {
+    return this.announcementsService.findByCategories(categories ?? []);
   }
 
   // POST /announcements
