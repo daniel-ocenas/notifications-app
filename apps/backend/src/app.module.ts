@@ -3,9 +3,6 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { AnnouncementsModule } from './announcements/announcements.module';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { DynamoDbModule } from './dynamodb/dynamodb.module';
 
 @Module({
   imports: [
@@ -16,9 +13,6 @@ import { DynamoDbModule } from './dynamodb/dynamodb.module';
       playground: true,
     }),
     AnnouncementsModule,
-    DynamoDbModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

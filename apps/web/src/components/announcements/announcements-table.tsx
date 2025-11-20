@@ -54,32 +54,39 @@ export default function AnnouncementsTable({
   });
 
   return (
-    <table className="table-auto w-full border-collapse">
-      <thead className={"h-14 border-b border-t border-gray-300"}>
-        {table.getHeaderGroups().map((hg) => (
-          <tr key={hg.id}>
-            {hg.headers.map((header) => (
-              <th key={header.id} className="px-3 py-2 font-semibold ">
-                {flexRender(
-                  header.column.columnDef.header,
-                  header.getContext(),
-                )}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody>
-        {table.getRowModel().rows.map((row) => (
-          <tr key={row.id} className={"border-b border-gray-300 h-14"}>
-            {row.getVisibleCells().map((cell) => (
-              <td key={cell.id} className="px-3 py-2 text-center">
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <div>
+      <table className="table-auto w-full border-collapse">
+        <thead className={"h-14 border-b border-t border-gray-300"}>
+          {table.getHeaderGroups().map((hg) => (
+            <tr key={hg.id}>
+              {hg.headers.map((header) => (
+                <th key={header.id} className="px-3 py-2 font-semibold ">
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext(),
+                  )}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map((row) => (
+            <tr key={row.id} className={"border-b border-gray-300 h-14"}>
+              {row.getVisibleCells().map((cell) => (
+                <td key={cell.id} className="px-3 py-2 text-center">
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {announcements.length === 0 && (
+        <div className={"flex justify-self-center my-4"}>
+          No announcements yet
+        </div>
+      )}
+    </div>
   );
 }

@@ -10,7 +10,8 @@
   "scripts": {
     "dev:backend": "npm --workspace apps/backend run start:dev",
     "dev:web": "npm --workspace apps/web run dev",
-    "dev": "npm run dev:backend & npm run dev:web"
+    "dev": "npm run dev:backend & npm run dev:web",
+    "tests:backend": "npm --workspace apps/backend test --silent"
   },
   "keywords": [],
   "author": "",

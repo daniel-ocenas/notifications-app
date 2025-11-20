@@ -11,45 +11,45 @@ export class AnnouncementsResolver {
 
   // GET /announcements
   @Query(() => [Announcement], { name: 'announcements' })
-  findAll() {
+  async findAll() {
     Logger.log('Going to fetch announcements from database');
-    return this.announcementsService.findAll();
+    return await this.announcementsService.findAll();
   }
 
   // GET /announcement/:id
   @Query(() => Announcement, { name: 'announcement' })
-  findOne(@Args('id', { type: () => String }) id: string) {
+  async findOne(@Args('id', { type: () => String }) id: string) {
     Logger.log(`Going to find announcement with id: ${id} `);
-    return this.announcementsService.findOne(id);
+    return await this.announcementsService.findOne(id);
   }
 
   // GET /announcementsByCategories/:category
   @Query(() => [Announcement], { name: 'announcementsByCategories' })
-  findByCategories(
+  async findByCategories(
     @Args({ name: 'categories', type: () => [String], nullable: true })
     categories?: string[],
-  ): Announcement[] {
-    return this.announcementsService.findByCategories(categories ?? []);
+  ): Promise<Announcement[]> {
+    return await this.announcementsService.findByCategories(categories ?? []);
   }
 
   // POST /announcements
   @Mutation(() => Announcement)
-  createAnnouncement(@Args('input') input: CreateAnnouncementInput) {
+  async createAnnouncement(@Args('input') input: CreateAnnouncementInput) {
     Logger.log(`Going to create announcement with title: ${input.title} `);
-    return this.announcementsService.create(input);
+    return await this.announcementsService.create(input);
   }
 
   // PUT/PATCH /announcements/:id
   @Mutation(() => Announcement)
-  updateAnnouncement(@Args('input') input: UpdateAnnouncementInput) {
+  async updateAnnouncement(@Args('input') input: UpdateAnnouncementInput) {
     Logger.log(`Going to update announcement with id: ${input.id} `);
-    return this.announcementsService.update(input);
+    return await this.announcementsService.update(input);
   }
 
   // DELETE /announcements/:id
   @Mutation(() => Boolean)
-  deleteAnnouncement(@Args('id', { type: () => String }) id: string) {
+  async deleteAnnouncement(@Args('id', { type: () => String }) id: string) {
     Logger.log(`Going to delete announcement with id: ${id} `);
-    return this.announcementsService.remove(id);
+    return await this.announcementsService.remove(id);
   }
 }
