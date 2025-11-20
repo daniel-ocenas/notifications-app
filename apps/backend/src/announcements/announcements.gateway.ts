@@ -23,4 +23,8 @@ export class AnnouncementsGateway implements OnGatewayConnection {
   emitAnnouncementCreated(payload: Announcement) {
     this.server.emit('announcementCreated', payload);
   }
+
+  emitAnnouncementUpdated(payload: Announcement) {
+    this.server.emit('announcementUpdated', payload);
+  }
 }

@@ -50,6 +50,8 @@ export class AnnouncementsService {
       );
     }
 
+    this.announcementsGateway.emitAnnouncementUpdated({ ...updated });
+
     Logger.log(`Updated announcement with id: ${updated.id}`);
     return updated;
   }

@@ -30,7 +30,7 @@ const columns: ColumnDef<Announcement>[] = [
   },
   {
     accessorKey: "category",
-    header: () => <div className={"flex items-start"}>Categories</div>,
+    header: () => <div className={"flex items-start"}>Category</div>,
     cell: ({ row }) => {
       return (
         <div className={"relative flex items-start text-left"}>
