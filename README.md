@@ -8,7 +8,7 @@ API and listens for live updates.
 
 - Backend: NestJS, GraphQL (Apollo), WebSockets
 - Database: AWS DynamoDB
-- Web: Next.js, React, Apollo Client
+- Web: React, Next.js, Tailwind, Apollo Client
 - TypeScript, Jest, ESLint, Prettier
 
 ## Start commands
