@@ -35,7 +35,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${lato.variable}`}>
         <ApolloWrapper>
-          <div className={"flex flex-row h-screen "}>
+          <div className={"flex flex-row min-h-screen"}>
             <SideBar />
             <main className="flex flex-col py-16 px-16 w-full">{children}</main>
           </div>

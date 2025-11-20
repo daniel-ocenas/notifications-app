@@ -33,7 +33,7 @@ const columns: ColumnDef<Announcement>[] = [
     header: () => <div className={"flex items-start"}>Categories</div>,
     cell: ({ row }) => {
       return (
-        <div className={"relative flex items-start"}>
+        <div className={"relative flex items-start text-left"}>
           {row.original.category.join(", ")}
           <a
             href={`/announcements/${row.original.id}`}
@@ -70,10 +70,7 @@ export default function AnnouncementsTable({
         {table.getHeaderGroups().map((hg) => (
           <tr key={hg.id}>
             {hg.headers.map((header) => (
-              <th
-                key={header.id}
-                className="px-3 py-2 font-semibold w-1/4 text-center"
-              >
+              <th key={header.id} className="px-3 py-2 font-semibold ">
                 {flexRender(
                   header.column.columnDef.header,
                   header.getContext(),
@@ -87,7 +84,7 @@ export default function AnnouncementsTable({
         {table.getRowModel().rows.map((row) => (
           <tr key={row.id} className={"border-b border-gray-300 h-14"}>
             {row.getVisibleCells().map((cell) => (
-              <td key={cell.id} className="px-3 py-2 w-1/4 text-center">
+              <td key={cell.id} className="px-3 py-2 text-center">
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </td>
             ))}
