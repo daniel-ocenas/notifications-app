@@ -36,10 +36,7 @@ export class AnnouncementsService {
   }
 
   update(input: UpdateAnnouncementInput): Announcement {
-    const index = this.announcements.findIndex(
-      (a: Announcement) => a.id === input.id,
-    );
-
+    const index = this.announcements.findIndex((a) => a.id === input.id);
     if (index === -1) {
       throw new NotFoundException(
         `Announcement with id "${input.id}" not found`,

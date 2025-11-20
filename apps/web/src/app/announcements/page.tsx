@@ -1,21 +1,17 @@
-import AnnouncementsTable from "@/components/announcements/announcements-table";
+"use client";
+
+import AnnouncementsTableSection from "@/components/announcements/announcements-table-section";
 
 export default function Announcements() {
-  // load date from backend
-  const announcements = [
-    {
-      id: 1,
-      title: "title1",
-      publicationDate: "2023-01-01",
-      lastUpdate: "2023-01-02",
-      categories: ["cat1", "cat2"],
-    },
-  ];
-
   return (
     <div>
       <h2 className={"text-2xl font-bold mb-12"}>Announcements</h2>
-      <AnnouncementsTable announcements={announcements} />
+      <AnnouncementsTableSection />
+      <a href={"/announcements/new"}>
+        <button className=" bg-yellow-500 mt-8 px-4 py-2 rounded-3xl hover:bg-yellow-600 cursor-pointer">
+          Create new announcement
+        </button>
+      </a>
     </div>
   );
 }

@@ -1,12 +1,24 @@
+import { ApolloWrapper } from "@/components/apollo-wrapper";
 import SideBar from "@/components/side-bar";
 import type { Metadata } from "next";
-import { Lato } from "next/font/google";
+import localFont from "next/font/local";
+import React from "react";
 import "./globals.css";
 
-const lato = Lato({
+const lato = localFont({
+  src: [
+    {
+      path: "../../public/static/fonts/Lato-Light.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/static/fonts/Lato-Bold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
   variable: "--font-lato",
-  subsets: ["latin"],
-  weight: ["300", "400", "700", "900"],
 });
 
 export const metadata: Metadata = {
@@ -21,11 +33,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${lato.className} antialiased`}>
-        <div className={"flex flex-row h-screen "}>
-          <SideBar />
-          <main className="flex flex-col py-16 px-16 w-full">{children}</main>
-        </div>
+      <body className={`${lato.variable}`}>
+        <ApolloWrapper>
+          <div className={"flex flex-row h-screen "}>
+            <SideBar />
+            <main className="flex flex-col py-16 px-16 w-full">{children}</main>
+          </div>
+        </ApolloWrapper>
       </body>
     </html>
   );
