@@ -1,0 +1,134 @@
+{
+	"info": {
+		"_postman_id": "680d8fde-1022-4246-abcb-1f96bd50016d",
+		"name": "Announcements",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6347511"
+	},
+	"item": [
+		{
+			"name": "createAnnouncement",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"query\": \"mutation ($input: CreateAnnouncementInput!) { createAnnouncement(input: $input) { id title content category publicationDate } }\",\n  \"variables\": {\n    \"input\": {\n      \"title\": \"Test\",\n      \"content\": \"Hello world\",\n      \"category\": [\"Crime & Safety\", \"Emergencies\"],\n      \"publicationDate\": \"2025-12-19T12:47:31.696Z\"\n    }\n  }\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateAnnouncement Copy",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\n    \"query\": \"mutation ($input: UpdateAnnouncementInput!) { createAnnouncement(input: $input) { id title content category publicationDate } }\",\n    \"variables\": {\n      \"input\": {\n        \"id\": \"__pasteId__\",\n        \"title\": \"Test\",\n        \"content\": \"Hello world\",\n        \"category\": [\"Crime & Safety\", \"Emergencies\"],\n        \"publicationDate\": \"2025-12-19T12:47:31.696Z\"\n      }\n    }\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAnnouncements",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"query\": \"mutation ($input: CreateAnnouncementInput!) { createAnnouncement(input: $input) { id title content, publicationDate } }\",\n  \"variables\": {\n    \"input\": {\n      \"title\": \"Test\",\n      \"content\": \"Hello world\",\n      \"category\": \"info\",\n      \"publicationDate\": \"2025-11-19T12:47:31.696Z\"\n    }\n  }\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAnnouncement by Id",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"query\": \"mutation ($input: CreateAnnouncementInput!) { createAnnouncement(input: $input) { id title content, publicationDate } }\",\n  \"variables\": {\n    \"input\": {\n      \"title\": \"Test\",\n      \"content\": \"Hello world\",\n      \"category\": \"info\",\n      \"publicationDate\": \"2025-11-19T12:47:31.696Z\"\n    }\n  }\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
