@@ -104,7 +104,7 @@ export default function AnnouncementForm({
         />
       </InputWrapper>
       <InputWrapper
-        label={"Categories"}
+        label={"Category"}
         subHeader={
           "Select category so readers know what your announcement is about."
         }
