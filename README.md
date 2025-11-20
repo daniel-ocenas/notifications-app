@@ -13,6 +13,16 @@ API and listens for live updates.
 
 ## Start commands
 
+Make sure you have Docker installed and running, then start the container:
+
+```
+cd infra    
+
+docker-compose up -d
+```
+
+For local development run the following commands in the root directory:
+
 - Install dependencies (root):
     - `npm install`
 - Run backend and web together (dev):
