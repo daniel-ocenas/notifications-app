@@ -1,10 +1,12 @@
 "use client";
 
 import AnnouncementsTableSection from "@/components/announcements/announcements-table-section";
+import { Toaster } from "sonner";
 
 export default function Announcements() {
   return (
     <div>
+      <Toaster position="top-center" richColors />
       <h2 className={"text-2xl font-bold mb-12"}>Announcements</h2>
       <AnnouncementsTableSection />
       <a href={"/announcements/new"}>

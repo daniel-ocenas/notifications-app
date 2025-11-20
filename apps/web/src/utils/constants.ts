@@ -1,4 +1,4 @@
-import { MultiselectOptionType } from "@/ui/creatable-select";
+import { MultiselectOptionType } from "@/ui/multi-select";
 
 export const PREDEFINED_TAGS: MultiselectOptionType[] = [
   { label: "Community Events", value: "Community Events" },

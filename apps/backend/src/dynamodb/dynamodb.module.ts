@@ -8,7 +8,7 @@ import { Module } from '@nestjs/common';
       useFactory: () => {
         return new DynamoDBClient({
           region: 'eu-west-1',
-          endpoint: 'http://localhost:8000', // dynamodb-local
+          endpoint: process.env.DYNAMO_CLIENT_URL, // dynamodb-local
         });
       },
     },

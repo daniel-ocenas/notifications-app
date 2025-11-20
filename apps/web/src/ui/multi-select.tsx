@@ -1,17 +1,19 @@
 "use client";
 import React from "react";
 import { MultiValue } from "react-select";
-import ReactCreatableSelect from "react-select/creatable";
+import CreatableSelect from "react-select/creatable";
 
 export type MultiselectOptionType = { label: string; value: string };
 
-export default function CreatableSelect({
+export default function MultiSelect({
   value,
   onChangeAction,
+  placeholder,
   predefinedTags = [],
 }: {
   value: MultiselectOptionType[];
   onChangeAction: (tags: MultiselectOptionType[]) => void;
+  placeholder?: string;
   predefinedTags?: MultiselectOptionType[];
 }) {
   const handleChange = (selected: MultiValue<MultiselectOptionType>) => {
@@ -27,16 +29,15 @@ export default function CreatableSelect({
   };
 
   return (
-    <ReactCreatableSelect
+    <CreatableSelect
       isMulti
       value={value}
       options={predefinedTags}
       onChange={handleChange}
       onCreateOption={handleCreate}
-      placeholder="Select or type tags..."
+      placeholder={placeholder}
       className="w-full"
       classNamePrefix="react-select"
-      formatCreateLabel={(inputValue) => `Add "${inputValue}"`}
     />
   );
 }

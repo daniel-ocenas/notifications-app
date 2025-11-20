@@ -8,8 +8,7 @@ import {
 } from "@apollo/client";
 
 const httpLink = new HttpLink({
-  uri:
-    process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT ?? "http://localhost:8080/graphql",
+  uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT,
 });
 
 const authLink = new ApolloLink((operation, forward) => {

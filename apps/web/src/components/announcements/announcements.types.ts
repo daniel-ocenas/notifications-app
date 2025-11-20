@@ -3,6 +3,6 @@ export type Announcement = {
   title: string;
   content: string;
   category: string[];
-  publicationDate: Date;
-  updatedAt: Date;
+  publicationDate: string;
+  updatedAt: string;
 };

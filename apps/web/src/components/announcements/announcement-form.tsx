@@ -1,9 +1,10 @@
 "use client";
 import { Announcement } from "@/components/announcements/announcements.types";
-import CreatableSelect, { MultiselectOptionType } from "@/ui/creatable-select";
+import MultiSelect, { MultiselectOptionType } from "@/ui/multi-select";
 import { PREDEFINED_TAGS } from "@/utils/constants";
 import { formatDateForDatetimeLocal } from "@/utils/date-formatter";
-import { PropsWithChildren, useState } from "react";
+import { PropsWithChildren } from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
 interface InputWrapperProps extends PropsWithChildren {
   label?: string;
@@ -31,20 +32,22 @@ export function InputWrapper({
   );
 }
 
-function mapCategoriesToInput(
-  categories?: string[],
-): { label: string; value: string }[] {
-  return (
-    categories?.map((category) => ({ label: category, value: category })) ?? []
-  );
-}
+const mapCategoriesToInput = (categories?: string[]): MultiselectOptionType[] =>
+  categories?.map((category) => ({ label: category, value: category })) ?? [];
 
 export type OnSubmitActionProps = {
   id?: string;
   title: string;
   content: string;
   category: string[];
-  publicationDate: Date;
+  publicationDate: string;
+};
+
+type FormValues = {
+  title: string;
+  content: string;
+  tags: MultiselectOptionType[];
+  publicationDate: string;
 };
 
 export default function AnnouncementForm({
@@ -54,80 +57,50 @@ export default function AnnouncementForm({
   announcement?: Announcement;
   onSubmitAction: (announcement: OnSubmitActionProps) => void;
 }) {
-  const [title, setTitle] = useState(announcement?.title);
-  const [content, setContent] = useState(announcement?.content);
-  const [tags, setTags] = useState<MultiselectOptionType[]>(
-    mapCategoriesToInput(announcement?.category),
-  );
-  const [publicationDate, setPublicationDate] = useState<string>(
-    announcement?.publicationDate
-      ? formatDateForDatetimeLocal(new Date(announcement.publicationDate))
-      : "",
-  );
-  const [errors, setErrors] = useState<{
-    title?: string;
-    content?: string;
-    category?: string;
-    publicationDate?: string;
-  }>({});
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<FormValues>({
+    defaultValues: {
+      title: announcement?.title ?? "",
+      content: announcement?.content ?? "",
+      tags: mapCategoriesToInput(announcement?.category),
+      publicationDate: announcement?.publicationDate
+        ? formatDateForDatetimeLocal(announcement.publicationDate)
+        : "",
+    },
+  });
 
-  const validate = () => {
-    const newErrors: typeof errors = {};
-
-    if (!title || title.length < 1) {
-      newErrors.title = "Title is required";
-    }
-    if (!content || content.length < 1) {
-      newErrors.content = "Content is required";
-    }
-    if (tags.length < 1) {
-      newErrors.category = "At least 1 category is required";
-    }
-    if (!publicationDate || publicationDate.length < 1) {
-      newErrors.publicationDate = "Publication date is required";
-    }
-    return newErrors;
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const validationErrors = validate();
-    setErrors(validationErrors);
-
-    if (Object.keys(validationErrors).length > 0) {
-      return;
-    }
-
-    const category: string[] = tags.map((tag) => tag.value);
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
     onSubmitAction({
       id: announcement?.id,
-      title: title!,
-      content: content!,
-      category,
-      publicationDate: new Date(publicationDate),
+      title: data.title,
+      content: data.content,
+      category: data.tags.map((tag) => tag.value),
+      publicationDate: data.publicationDate,
     });
   };
 
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(onSubmit)}
       className="max-w-[50%] mx-auto p-4 space-y-4 w-full"
     >
-      <InputWrapper label={"Title"} error={errors.title}>
+      <InputWrapper label={"Title"} error={errors.title?.message}>
         <input
           type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="w-full border-1 border-gray-300 rounded px-2 py-1"
           placeholder="Enter title"
+          className="w-full border-1 border-gray-300 rounded px-2 py-1"
+          {...register("title", { required: "Title is required" })}
         />
       </InputWrapper>
-      <InputWrapper label={"Content"} error={errors.content}>
+      <InputWrapper label={"Content"} error={errors.content?.message}>
         <textarea
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          className="w-full border-1 border-gray-300 rounded px-2 py-1"
           placeholder="Enter content"
+          className="w-full border-1 border-gray-300 rounded px-2 py-1"
+          {...register("content", { required: "Content is required" })}
         />
       </InputWrapper>
       <InputWrapper
@@ -135,26 +108,38 @@ export default function AnnouncementForm({
         subHeader={
           "Select category so readers know what your announcement is about."
         }
-        error={errors.category}
+        error={errors.tags ? "At least 1 category is required" : undefined}
       >
-        <CreatableSelect
-          value={tags}
-          onChangeAction={setTags}
-          predefinedTags={PREDEFINED_TAGS}
+        <Controller
+          name={"tags"}
+          control={control}
+          rules={{ validate: (v) => (v?.length ?? 0) > 0 }}
+          render={({ field }) => (
+            <MultiSelect
+              value={field.value}
+              onChangeAction={field.onChange}
+              placeholder={"Select categories"}
+              predefinedTags={PREDEFINED_TAGS}
+            />
+          )}
         />
       </InputWrapper>
-      <InputWrapper label={"Publication Date"} error={errors.publicationDate}>
+      <InputWrapper
+        label={"Publication Date"}
+        error={errors.publicationDate?.message}
+      >
         <input
-          type="datetime-local"
-          value={publicationDate}
-          onChange={(e) => setPublicationDate(e.target.value)}
-          className="border-1 border-gray-300 rounded px-2 py-1 w-full"
+          type={"datetime-local"}
+          className={"border-1 border-gray-300 rounded px-2 py-1 w-full"}
+          {...register("publicationDate", {
+            required: "Publication date is required",
+          })}
         />
       </InputWrapper>
       <div className={"flex justify-end"}>
         <button
           type="submit"
-          className="bg-yellow-500  px-4 py-2 rounded-3xl hover:bg-yellow-600 cursor-pointer"
+          className="bg-yellow-500 px-4 py-2 rounded-3xl hover:bg-yellow-600 cursor-pointer"
         >
           Submit
         </button>

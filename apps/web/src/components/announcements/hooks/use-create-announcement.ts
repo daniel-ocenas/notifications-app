@@ -20,7 +20,7 @@ export const useCreateAnnouncement = () => {
     const input: CreateAnnouncementInput = {
       title: announcement.title,
       content: announcement.content,
-      publicationDate: announcement.publicationDate.toISOString(),
+      publicationDate: announcement.publicationDate,
       category: announcement.category,
     };
 

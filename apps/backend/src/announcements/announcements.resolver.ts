@@ -12,31 +12,35 @@ export class AnnouncementsResolver {
   // GET /announcements
   @Query(() => [Announcement], { name: 'announcements' })
   findAll() {
-    Logger.log('Fetching announcements from database');
+    Logger.log('Going to fetch announcements from database');
     return this.announcementsService.findAll();
   }
 
   // GET /announcements/:id
   @Query(() => Announcement, { name: 'announcement' })
   findOne(@Args('id', { type: () => String }) id: string) {
+    Logger.log(`Going to find announcement with id: ${id} `);
     return this.announcementsService.findOne(id);
   }
 
   // POST /announcements
   @Mutation(() => Announcement)
   createAnnouncement(@Args('input') input: CreateAnnouncementInput) {
+    Logger.log(`Going to create announcement with title: ${input.title} `);
     return this.announcementsService.create(input);
   }
 
   // PUT/PATCH /announcements/:id
   @Mutation(() => Announcement)
   updateAnnouncement(@Args('input') input: UpdateAnnouncementInput) {
+    Logger.log(`Going to update announcement with id: ${input.id} `);
     return this.announcementsService.update(input);
   }
 
   // DELETE /announcements/:id
   @Mutation(() => Boolean)
   deleteAnnouncement(@Args('id', { type: () => String }) id: string) {
+    Logger.log(`Going to delete announcement with id: ${id} `);
     return this.announcementsService.remove(id);
   }
 }
