@@ -1,10 +1,7 @@
 "use client";
 import AnnouncementsEditLinkCell from "@/components/announcements/announcements-edit-link-cell";
 import { Announcement } from "@/components/announcements/announcements.types";
-import {
-  formatPublicationDate,
-  formatUpdateDate,
-} from "@/utils/date-formatter";
+import { formatDate } from "@/utils/date-formatter";
 import {
   ColumnDef,
   flexRender,
@@ -18,14 +15,14 @@ const columns: ColumnDef<Announcement>[] = [
     accessorKey: "publicationDate",
     header: "Publication date",
     cell: ({ row }) => {
-      return <div>{formatPublicationDate(row.original.publicationDate)}</div>;
+      return <div>{formatDate(row.original.publicationDate)}</div>;
     },
   },
   {
     accessorKey: "updatedAt",
     header: "Last update",
     cell: ({ row }) => {
-      return <div>{formatUpdateDate(row.original.updatedAt)}</div>;
+      return <div>{formatDate(row.original.updatedAt)}</div>;
     },
   },
   {
