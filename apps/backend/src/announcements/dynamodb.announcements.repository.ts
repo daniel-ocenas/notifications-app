@@ -5,6 +5,7 @@ import {
   GetCommand,
   PutCommand,
   ScanCommand,
+  ScanCommandInput,
 } from '@aws-sdk/lib-dynamodb';
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { randomUUID } from 'crypto';
@@ -61,14 +62,35 @@ export class DynamoDbAnnouncementsRepository
   }
 
   async findByCategories(categories: string[]): Promise<Announcement[]> {
-    if (!categories || categories.length === 0) return this.findAll();
-    // Minimal implementation: scan and filter client-side
-    const res = await this.docClient.send(
-      new ScanCommand({ TableName: this.tableName }),
-    );
-    const items = (res.Items || [])
-      .map((i) => this.deserialize(i))
-      .filter((a) => a.category.some((c) => categories.includes(c)));
+    if (!categories || categories.length === 0) {
+      return this.findAll();
+    }
+
+    const expressionAttributeValues: Record<string, any> = {};
+    const categoryPlaceholders: string[] = [];
+
+    categories.forEach((cat, index) => {
+      const placeholder = `:cat${index}`;
+      categoryPlaceholders.push(placeholder);
+      expressionAttributeValues[placeholder] = { S: cat };
+    });
+
+    const filterExpression = categoryPlaceholders
+      .map((ph) => `contains(#category, ${ph})`)
+      .join(' OR ');
+
+    const params: ScanCommandInput = {
+      TableName: this.tableName,
+      FilterExpression: filterExpression,
+      ExpressionAttributeNames: {
+        '#category': 'category',
+      },
+      ExpressionAttributeValues: expressionAttributeValues,
+    };
+
+    const res = await this.docClient.send(new ScanCommand(params));
+
+    const items = (res.Items || []).map((i) => this.deserialize(i));
     return sortByUpdatedAtDesc(items);
   }
 
